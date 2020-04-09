@@ -1,0 +1,10 @@
+<config>
+  <image_tree>
+    <name>LA.UM.8.6.2.r1</name>
+    <build_id>LA.UM.8.6.2.r1-06600-89xx.0-1</build_id>
+    <branch_point_revision/>
+    <revision>06600</revision>
+    <spin>1</spin>
+    <client>89xx.0</client>
+  </image_tree>
+</config>

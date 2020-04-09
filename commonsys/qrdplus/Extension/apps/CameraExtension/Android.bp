@@ -1,0 +1,13 @@
+
+
+java_library {
+    name: "com.qualcomm.qti.camera",
+    installable: true,
+
+    srcs: ["**/*.java"],
+
+    // This will install the file in /system/framework
+    // This line is NOT needed and will cause location binding which may impact Android O
+    // LOCAL_MODULE_PATH := $(TARGET_OUT_JAVA_LIBRARIES)
+
+}

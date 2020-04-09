@@ -1,0 +1,136 @@
+/*
+ * Copyright (c) 2020 Qualcomm Technologies, Inc.
+ * All Rights Reserved.
+ * Confidential and Proprietary - Qualcomm Technologies, Inc.
+ */
+
+package vendor.qti.hardware.sidekickutility@1.0;
+
+import ISidekickUtilityCallbacks;
+
+/**
+ * ISidekickUtility is an interface that tells a Sidekick chip (small
+ * compute resource) how to control and configure the sidekick
+ */
+
+interface ISidekickUtility {
+
+    /**
+     * Set alarm to Sidekick
+     *
+     * @param alarm set alarm during Sidekick.
+     * @return status OK, FAIL, or BAD_VALUE
+     */
+    setAlarm(AlarmInfo alarm) generates (Status status);
+
+    /**
+     * Update alarm to Sidekick
+     *
+     * @param alarm update alarm during Sidekick.
+     * @return status OK, FAIL, or BAD_VALUE
+     */
+    updateAlarm(AlarmInfo alarm) generates (Status status);
+
+    /**
+     * delete current alarm
+     * @param alarmId alarmId need to deleted
+     * @return status OK, FAIL, or BAD_VALUE
+     */
+    deleteAlarm(uint8_t alarmId) generates (Status status);
+
+    /**
+     * configure vibrator to Sidekick
+     * @param vibratorInfo How to play this vibrator
+     * @return status OK, FAIL, or BAD_VALUE
+     */
+    configureVibrator(VibratorInfo vibratorInfo) generates (Status status);
+
+    /**
+     * delete Vibrator configured in Sidekick
+     *
+     * @return status OK, FAIL, or BAD_VALUE
+     */
+    deleteVibrator() generates (Status status);
+
+    /**
+     * configure RingTone on Sidekick
+     * @param ringToneInfo How to play this ringTone
+     * @return status OK, FAIL, or BAD_VALUE
+     */
+    configureRingTone(RingToneInfo ringToneInfo) generates (Status status);
+
+    /**
+     * delete RingTone configured in Sidekick
+     *
+     * @return status OK, FAIL, or BAD_VALUE
+     */
+    deleteRingTone() generates (Status status);
+
+    /**
+     * Clears all data configured in Sidekick.
+     *
+     * @return status OK, FAIL, or BAD_VALUE
+     */
+    reset() generates (Status status);
+
+    /**
+     * enterTwm help to SidekickUtility HAL understand all required information
+     * configured for TWM.
+     *
+     * @return status OK, FAIL, or BAD_VALUE
+     */
+    enterTwm() generates (Status status);
+
+    /**
+     * Creates a new instance of a metric with given id for Sidekick
+     *
+     * @param metricSensorInfo Info to set metric Sensor on Sidekick.
+     * @return status OK, FAIL, or BAD_VALUE
+     */
+    createMetricInstance(MetricSensorInfo metricSensorInfo) generates (Status status);
+
+    /**
+     * Destroy MetricInstance of a metric with given id for Sidekick if no longer required.
+     *
+     * @param metricId   The metric instance id to be destroyed.
+     * @return status OK, FAIL, or BAD_VALUE
+     */
+    destroyMetricInstance(MetricId metricId) generates (Status status);
+
+    /**
+     * Starts a metric instance/session in Sidekick.
+     *
+     * @param metricId   The metric instance id which need to start.
+     * @param dataBuffer       A buffer of data
+     * @return status OK, FAIL, or BAD_VALUE
+     */
+    start(MetricId metricId, vec<uint8_t> dataBuffer) generates (Status status);
+
+    /**
+     * Stops a metric instance/session in Sidekick.
+     *
+     * @param metricId   The metric instance id which need to stop.
+     * @return status OK, FAIL, or BAD_VALUE
+     */
+    stop(MetricId metricId) generates (Status status);
+
+    /**
+     * Gets MetricSensor data from Sidekick.
+     *
+     * @return status OK, FAIL, or BAD_VALUE
+     * @return metricSensorData MetricSensor data from Sidekick.
+     */
+    getMetricSensorData() generates (Status status, TWMMetricSensorData metricSensorData);
+
+    /**
+     * Register callbacks
+     *
+     * This method should be used by client/application to register callbacks.
+     * Callbacks are invoked when the TWM entry initiated
+     * from the SidekickUtility hal.
+     *
+     * @param callback   Implements ISidekickMetricsCallbacks which will
+     *                   receive callbacks when SidekickUtility hal wants to notify TWM Entry
+     */
+    register_callbacks(ISidekickUtilityCallbacks callback);
+};

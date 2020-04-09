@@ -1,0 +1,75 @@
+/*
+ * Copyright (c) 2020 Qualcomm Technologies, Inc.
+ * All Rights Reserved.
+ * Confidential and Proprietary - Qualcomm Technologies, Inc.
+ */
+
+package vendor.qti.hardware.sidekickutility@1.0;
+
+typedef uint32_t MetricId;
+
+enum Status : uint32_t {
+    OK,
+    FAIL,                  // Some unforeseen problem that can't be described accurately
+    BAD_VALUE,             // Some parameter is invalid or not acceptable by sidekick
+};
+
+struct AlarmInfo {
+    uint32_t Id;
+    AlarmType alarmType;
+    int64_t msSinceMidnight;    // ms since midnight to ring
+    uint32_t recurenceDays;     // each bit representing the day to repeat the alarm
+    uint32_t ringId;            // refer to the ringtone to play, 0 indicates no ringtone to play
+    uint32_t vibratorId;        // refer to the vibrator to play, 0 indicates no vibration
+    uint32_t buttonSnooze;      // Button ID for snooze button
+    uint32_t buttonDismiss;     // Button ID for dismiss button
+    uint32_t[5] DispIdx;        //which display asset(s) to draw, drawableInfo.id
+};
+
+enum AlarmType : uint32_t {
+    ALARM,
+    REMINDER
+};
+
+enum VibratorType : uint32_t {
+    CLICK,
+    DOUBLCLICK
+};
+
+enum VibratorStrength : uint32_t {
+    LIGHT,
+    MEDIUM,
+    STRONG
+};
+
+
+struct RingToneInfo {
+    uint32_t Id;
+    uint16_t totalDuration;
+    uint32_t repeat;
+    vec<uint8_t> ringToneBuf;
+};
+
+/*
+ * VibratorInfo is a full description of the vibrator
+ */
+struct VibratorInfo {
+    uint32_t Id;
+    uint16_t totalDuration;   // Total time in ms to play vibrator. FFFF if it has to play continuously (or until stop received)
+    VibratorType vibratorType;
+    VibratorStrength vibratorStrength;
+    uint32_t repeat;
+};
+
+struct MetricSensorInfo  {
+    MetricId metricId;
+    string metricName;
+    string format;
+    uint32_t refreshRate;
+};
+
+struct TWMMetricSensorData {
+    MetricId Id; // Metric ID of sensor
+    int64_t timestamp;
+    vec<uint8_t>  eventBuf;
+};
